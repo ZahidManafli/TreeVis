@@ -106,11 +106,3 @@ export function btFromValues(values) {
   t.root = ids[0] ?? null;
   return t;
 }
-
-export function randomValues(n, min = 1, max = 99) {
-  const set = new Set();
-  while (set.size < Math.min(n, max - min + 1)) {
-    set.add(Math.floor(Math.random() * (max - min + 1)) + min);
-  }
-  return [...set];
-}

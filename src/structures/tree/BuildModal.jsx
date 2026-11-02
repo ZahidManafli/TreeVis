@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Shuffle, ArrowLeft, ArrowRight, Sparkles, Hash } from 'lucide-react';
-import { randomValues } from '../lib/tree';
+import { randomValues, parseValue, sanitizeValue } from '../../lib/values';
 
 const MAX_N = 20;
-const isInt = (s) => /^-?\d{1,3}$/.test(s.trim());
 
-export default function BuildModal({ open, onClose, onBuild }) {
+export default function BuildModal({ open, dtype, onClose, onBuild }) {
+  const isValid = (s) => !parseValue(dtype, s).error;
   const [stage, setStage] = useState(1);
   const [n, setN] = useState('7');
   const [values, setValues] = useState([]);
@@ -40,16 +40,16 @@ export default function BuildModal({ open, onClose, onBuild }) {
     setTimeout(() => cellRefs.current[0]?.focus(), 120);
   };
 
-  const fillRandom = () => setValues(randomValues(values.length).map(String));
+  const fillRandom = () => setValues(randomValues(dtype, values.length).map(String));
 
   const submit = () => {
-    if (values.some((v) => !isInt(v))) {
+    if (values.some((v) => !isValid(v))) {
       setShowErrors(true);
-      const firstBad = values.findIndex((v) => !isInt(v));
+      const firstBad = values.findIndex((v) => !isValid(v));
       cellRefs.current[firstBad]?.focus();
       return;
     }
-    onBuild(values.map((v) => parseInt(v, 10)));
+    onBuild(values.map((v) => parseValue(dtype, v).value));
   };
 
   const onCellKey = (e, i) => {
@@ -60,8 +60,8 @@ export default function BuildModal({ open, onClose, onBuild }) {
     }
   };
 
-  const filled = values.filter(isInt).length;
-  const dupCount = values.filter(isInt).length - new Set(values.filter(isInt).map(Number)).size;
+  const filled = values.filter(isValid).length;
+  const dupCount = values.filter(isValid).length - new Set(values.filter(isValid).map((v) => parseValue(dtype, v).value)).size;
 
   return (
     <AnimatePresence>
@@ -139,12 +139,12 @@ export default function BuildModal({ open, onClose, onBuild }) {
                       >
                         <input
                           ref={(el) => (cellRefs.current[i] = el)}
-                          className={`cell-input ${showErrors && !isInt(v) ? 'invalid' : ''} ${isInt(v) ? 'filled' : ''}`}
+                          className={`cell-input ${showErrors && !isValid(v) ? 'invalid' : ''} ${isValid(v) ? 'filled' : ''}`}
                           value={v}
-                          inputMode="numeric"
+                          inputMode={dtype === 'int' ? 'numeric' : 'text'}
                           maxLength={4}
                           onChange={(e) => {
-                            const val = e.target.value.replace(/[^\d-]/g, '');
+                            const val = sanitizeValue(dtype, e.target.value);
                             setValues((prev) => prev.map((p, j) => (j === i ? val : p)));
                           }}
                           onKeyDown={(e) => onCellKey(e, i)}
@@ -159,7 +159,7 @@ export default function BuildModal({ open, onClose, onBuild }) {
                     </span>
                     {dupCount > 0 && <span className="warn">{dupCount} dublikat — qurulma zamanı atlanacaq</span>}
                   </div>
-                  {showErrors && <p className="field-error">Bütün xanalara -999…999 arası tam ədəd daxil edin.</p>}
+                  {showErrors && <p className="field-error">{dtype === 'int' ? 'Bütün xanalara -999…999 arası tam ədəd daxil edin.' : 'Bütün xanalara 1–4 simvollu sətir daxil edin.'}</p>}
                 </motion.div>
               )}
             </AnimatePresence>

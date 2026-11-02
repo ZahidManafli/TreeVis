@@ -143,31 +143,6 @@ export function StatusMessage({ step }) {
   );
 }
 
-const LEGEND = [
-  ['path', 'Yol'],
-  ['compare', 'Müqayisə'],
-  ['queued', 'Növbədə'],
-  ['visited', 'Ziyarət edilib'],
-  ['found', 'Tapıldı'],
-  ['new', 'Yeni'],
-  ['target', 'Hədəf'],
-  ['succ', 'Varis'],
-  ['removing', 'Silinir'],
-];
-
-export function Legend() {
-  return (
-    <div className="legend">
-      {LEGEND.map(([k, label]) => (
-        <span key={k} className="legend-item">
-          <i className={`legend-dot node-${k}`} />
-          {label}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 export function Toast({ toast }) {
   return (
     <div className="toast-wrap">

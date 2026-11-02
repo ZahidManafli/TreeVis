@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GitBranch } from 'lucide-react';
-import { layout, edgesOf } from '../lib/tree';
+import { layout, edgesOf } from './tree';
 
 const R = 22;
 const H_GAP = 58;
