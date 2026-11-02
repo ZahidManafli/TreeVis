@@ -21,7 +21,7 @@ export default {
   stats: (d) => [
     { label: 'Ölçü', value: d.size },
     { label: 'Tutum', value: d.cap },
-    { label: 'Front', value: d.size ? d.slots[d.front].value : '—' },
+    { label: 'Front', value: d.slots[d.front]?.value ?? '—' },
   ],
   legend: [
     ['new', 'Enqueue'],

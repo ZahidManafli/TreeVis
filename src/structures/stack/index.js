@@ -21,7 +21,7 @@ export default {
   stats: (d) => [
     { label: 'Ölçü', value: d.items.length },
     { label: 'Tutum', value: d.cap },
-    { label: 'Top', value: d.items.length ? d.items[d.items.length - 1].value : '—' },
+    { label: 'Top', value: d.items.at(-1)?.value ?? '—' },
   ],
   legend: [
     ['new', 'Push'],

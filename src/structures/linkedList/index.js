@@ -20,7 +20,7 @@ export default {
   empty: () => createList([]),
   stats: (d) => [
     { label: 'Uzunluq', value: length(d) },
-    { label: 'Head', value: d.head ? d.nodes[d.head].value : 'null' },
+    { label: 'Head', value: d.nodes[d.head]?.value ?? 'null' },
   ],
   legend: [
     ['path', 'Gəzilən'],

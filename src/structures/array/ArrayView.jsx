@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import FitBox from '../../components/FitBox';
 import { ptrColor } from '../../lib/pointers';
 import { size } from './algorithms';
 
@@ -28,7 +29,7 @@ export default function ArrayView({ data, step }) {
     });
 
   return (
-    <div className="view-center">
+    <FitBox>
       <div className="arr-stage" style={{ width, height: LIFT + CELL + 130 }}>
         {Array.from({ length: data.cap }, (_, k) => (
           <div
@@ -82,6 +83,6 @@ export default function ArrayView({ data, step }) {
           ))}
         </AnimatePresence>
       </div>
-    </div>
+    </FitBox>
   );
 }

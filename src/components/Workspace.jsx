@@ -118,6 +118,7 @@ export default function Workspace({ config, dtype, active, notify }) {
           ref={(el) => (refs.current[def.key] = el)}
           value={vals[def.key]}
           placeholder={def.kind === 'value' ? valuePlaceholder(dtype) : def.placeholder}
+          title={def.title}
           inputMode={def.kind === 'index' || (def.kind === 'value' && dtype === 'int') ? 'numeric' : 'text'}
           onChange={(e) => onInputChange(def, e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && onEnter(def)}

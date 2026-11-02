@@ -47,7 +47,7 @@ export default {
   ],
   inputs: [
     { key: 'value', kind: 'value', label: 'Dəyər', enter: 'insert' },
-    { key: 'index', kind: 'index', label: 'İndeks', placeholder: 'boş = son' },
+    { key: 'index', kind: 'index', label: 'İndeks', placeholder: 'sona', title: 'Boş qoysanız, element sona əlavə olunur' },
   ],
   ops: [
     { id: 'access', label: 'Access', icon: MousePointerClick, tone: 'search', needs: ['index'], run: access },

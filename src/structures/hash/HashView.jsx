@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import FitBox from '../../components/FitBox';
 import { ptrColor } from '../../lib/pointers';
 
 const spring = { type: 'spring', stiffness: 260, damping: 26 };
@@ -98,8 +99,10 @@ export default function HashView({ data, step }) {
   const hl = step?.hl ?? {};
   const ptr = step?.ptr ?? {};
   return (
-    <div className="view-center column">
+    <FitBox>
+      <div className="fit-column">
       {data.method === 'chain' ? <ChainView data={data} hl={hl} /> : <ProbeView data={data} hl={hl} ptr={ptr} />}
-    </div>
+      </div>
+    </FitBox>
   );
 }

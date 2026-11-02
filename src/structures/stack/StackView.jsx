@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import FitBox from '../../components/FitBox';
 
 const GAP = 6;
 
@@ -36,7 +37,8 @@ export default function StackView({ data, step }) {
   const yOf = (k) => (cap - 1 - k) * ROW;
 
   return (
-    <div className="view-center column">
+    <FitBox>
+      <div className="fit-column">
       <ExprStrip expr={data.expr} />
       <div className="stk">
         <div className="stk-idx" style={{ height }}>
@@ -84,6 +86,7 @@ export default function StackView({ data, step }) {
       <div className="stk-caption">
         {n} / {cap} · LIFO
       </div>
-    </div>
+      </div>
+    </FitBox>
   );
 }
